@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#F7F3EC">
 <title>Ten minutes to your own assistant</title>
-<meta name="description" content="Claude Code for creators, not coders. Watch the install, then follow the written guide.">
+<meta name="description" content="Claude Code for creators, not coders. Watch the install, then copy two lines and let Claude set you up.">
 
 <!-- Fonts: DM Serif Display (headlines) + Lato (body), with system fallbacks declared in CSS -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +24,7 @@
     --line: rgba(43, 43, 40, 0.14);
     --serif: "DM Serif Display", Georgia, "Times New Roman", serif;
     --sans: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -73,7 +74,7 @@
   .sub {
     font-size: 1.05rem;
     color: var(--charcoal-soft);
-    max-width: 26em;
+    max-width: 27em;
     margin: 0 auto;
   }
 
@@ -147,6 +148,128 @@
     text-transform: uppercase;
   }
 
+  /* ============ Setup (the doing) ============ */
+  .setup { padding: 52px 0 0; }
+
+  .setup h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.9rem;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .setup .intro {
+    text-align: center;
+    color: var(--charcoal-soft);
+    font-size: 1rem;
+    max-width: 28em;
+    margin: 0 auto 26px;
+  }
+
+  /* OS toggle */
+  .os-toggle {
+    display: flex;
+    gap: 6px;
+    width: max-content;
+    margin: 0 auto 26px;
+    padding: 5px;
+    background: var(--cream-deep);
+    border-radius: 12px;
+  }
+  .os-toggle button {
+    border: 0;
+    background: transparent;
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--charcoal-soft);
+    padding: 9px 22px;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .os-toggle button.active {
+    background: var(--cream);
+    color: var(--charcoal);
+    box-shadow: 0 2px 8px -3px rgba(43,43,40,0.25);
+  }
+
+  /* Step blocks */
+  .step-block { margin-bottom: 30px; }
+  .step-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 8px;
+  }
+  .step-desc {
+    font-size: 1rem;
+    color: var(--charcoal);
+    margin-bottom: 12px;
+  }
+  .step-desc.small {
+    font-size: 0.92rem;
+    color: var(--charcoal-soft);
+    margin-top: 12px;
+    margin-bottom: 0;
+  }
+  .step-desc code, .inline-code {
+    font-family: var(--mono);
+    font-size: 0.92em;
+    background: var(--cream-deep);
+    padding: 2px 7px;
+    border-radius: 6px;
+  }
+
+  /* Copy box — dark, mono, one tap to copy */
+  .copybox {
+    position: relative;
+    background: var(--charcoal);
+    border-radius: 14px;
+    padding: 20px 18px 18px;
+    box-shadow: 0 12px 30px -16px rgba(43,43,40,0.5);
+  }
+  .copybox code {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.96rem;
+    line-height: 1.55;
+    color: var(--cream);
+    white-space: pre-wrap;
+    word-break: break-word;
+    padding-right: 4px;
+  }
+  .copy-btn {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    min-height: 46px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--terracotta);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-size: 0.98rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+  .copy-btn:hover { background: var(--terracotta-dark); }
+  .copy-btn:active { transform: scale(0.99); }
+  .copy-btn.copied { background: #4F7A52; }
+
+  /* OS-conditional visibility (JS sets body class) */
+  .mac-only, .win-only { display: none; }
+  body.os-mac span.mac-only { display: inline; }
+  body.os-win span.win-only { display: inline; }
+  /* command boxes: .copybox code is display:block by default; hide only the inactive OS line */
+  body.os-mac .copybox code.win-only { display: none; }
+  body.os-win .copybox code.mac-only { display: none; }
+
   /* ============ Buttons ============ */
   .btn {
     display: flex;
@@ -165,15 +288,6 @@
     cursor: pointer;
     transition: background 0.15s ease, transform 0.15s ease;
   }
-
-  .btn-primary {
-    background: var(--terracotta);
-    color: var(--cream);
-    box-shadow: 0 10px 26px -10px rgba(200, 103, 74, 0.55);
-  }
-  .btn-primary:hover { background: var(--terracotta-dark); }
-  .btn-primary:active { transform: scale(0.985); }
-
   .btn-secondary {
     background: transparent;
     color: var(--charcoal);
@@ -182,68 +296,40 @@
   .btn-secondary:hover { background: rgba(43, 43, 40, 0.05); }
   .btn-secondary:active { transform: scale(0.985); }
 
-  /* ============ CTA sections ============ */
-  .cta { padding: 48px 0 0; }
-
-  .cta-note {
-    margin-top: 16px;
-    text-align: center;
-    font-size: 0.95rem;
-    color: var(--charcoal-soft);
-  }
-
   .divider {
     height: 1px;
     background: var(--line);
-    margin: 52px 0;
+    margin: 50px 0;
   }
 
   .guide h2 {
     font-family: var(--serif);
     font-weight: 400;
-    font-size: 1.9rem;
+    font-size: 1.6rem;
     text-align: center;
     margin-bottom: 10px;
   }
-
   .guide p {
     text-align: center;
     color: var(--charcoal-soft);
     font-size: 1rem;
-    max-width: 26em;
-    margin: 0 auto 24px;
+    max-width: 27em;
+    margin: 0 auto 22px;
   }
-
-  /* Email form (hidden until wired up — see comments in the HTML) */
-  .email-form { display: flex; flex-direction: column; gap: 12px; }
-  .email-input {
-    width: 100%;
-    min-height: 56px;
-    padding: 16px 18px;
-    border: 2px solid var(--line);
-    border-radius: 14px;
-    background: #FFFFFF;
-    font-family: var(--sans);
-    font-size: 1.05rem;
-    color: var(--charcoal);
-  }
-  .email-input:focus { outline: none; border-color: var(--terracotta); }
 
   /* ============ Footer ============ */
   footer {
-    margin-top: 72px;
+    margin-top: 64px;
     padding: 44px 0 56px;
     border-top: 1px solid var(--line);
     text-align: center;
   }
-
   footer p {
     color: var(--charcoal-soft);
     font-size: 0.95rem;
     max-width: 28em;
     margin: 0 auto;
   }
-
   footer .promise {
     font-family: var(--serif);
     font-size: 1.25rem;
@@ -257,17 +343,16 @@
     .video-wrap { max-width: 360px; }
     .video-wrap.landscape { max-width: 560px; }
     .btn { max-width: 420px; margin-left: auto; margin-right: auto; }
-    .email-form { max-width: 420px; margin: 0 auto; }
   }
 </style>
 </head>
-<body>
+<body class="os-mac">
 
   <!-- ============ 1. HERO ============ -->
   <header class="hero wrap">
     <p class="kicker">Claude Code for creators &mdash; not coders</p>
     <h1>Ten minutes to your own assistant.</h1>
-    <p class="sub">Watch me install it, then do the same on your computer with the guide open on your phone.</p>
+    <p class="sub">Watch me install it on your phone, then copy two lines on your computer. Claude does the rest.</p>
   </header>
 
   <!-- ============ 2. VIDEO ============ -->
@@ -278,7 +363,7 @@
 
            ███ LAUNCH BLOCKER ███
            The headline promise is "Watch me install it." Do NOT send the
-           GUIDE DM link until the real embed is in this slot.
+           DM link until the real embed is in this slot.
 
            When the video is up on YouTube:
            1. Delete the whole <a class="video-placeholder"> block below.
@@ -290,61 +375,132 @@
            If you end up posting a horizontal cut instead, also add the class
            "landscape" to the <div class="video-wrap"> above and the slot goes 16:9.
       -->
-      <a class="video-placeholder" href="#guide">
+      <a class="video-placeholder" href="#setup">
         <div class="play"></div>
-        <p>Install video coming today &mdash;<br>every step is in the written guide below</p>
+        <p>Install video coming today &mdash;<br>the two lines you need are right below</p>
       </a>
       <!-- ▲▲▲ END VIDEO EMBED ▲▲▲ -->
 
     </div>
   </section>
 
-  <!-- ============ 3. PRIMARY CTA ============ -->
-  <section class="cta wrap">
+  <!-- ============ 3. SETUP — THE DOING (open this on your computer) ============ -->
+  <section class="setup wrap" id="setup">
+    <h2>Do this part on your computer</h2>
+    <p class="intro">Open this page on the computer you&rsquo;ll use &mdash; then just tap Copy. No typing anything tricky.</p>
 
-    <!-- ▼▼▼ EMAIL CAPTURE — NOT WIRED UP YET ▼▼▼
-         Right now the button below just scrolls to the PDF section, so the
-         page works on day one with zero setup.
+    <div class="os-toggle" role="tablist" aria-label="Choose your computer">
+      <button data-os="mac" class="active" type="button">Mac</button>
+      <button data-os="win" type="button">Windows</button>
+    </div>
 
-         When you're ready to collect emails:
-         1. Delete the <a class="btn btn-primary"...> line below.
-         2. Un-comment this form and put your endpoint in action="".
+    <div class="step-block">
+      <span class="step-label">Step 1 &mdash; Install it</span>
+      <p class="step-desc">
+        <span class="mac-only">Open <span class="inline-code">Terminal</span> (press Cmd+Space, type Terminal), paste this, press Enter:</span>
+        <span class="win-only">Open <span class="inline-code">PowerShell</span> (press the Windows key, type PowerShell), paste this, press Enter:</span>
+      </p>
+      <div class="copybox">
+        <code class="mac-only" data-copy="curl -fsSL https://claude.ai/install.sh | bash">curl -fsSL https://claude.ai/install.sh | bash</code>
+        <code class="win-only" data-copy="irm https://claude.ai/install.ps1 | iex">irm https://claude.ai/install.ps1 | iex</code>
+        <button class="copy-btn" type="button">Copy</button>
+      </div>
+      <p class="step-desc small">Text scrolls by for a minute &mdash; that&rsquo;s it working. When it stops, type <span class="inline-code">claude</span> and sign in.</p>
+    </div>
 
-         Where to get an endpoint:
-         - ManyChat: you already have it — make a flow with an email input,
-           or use an external request trigger, and point action at that URL.
-         - ConvertKit / Mailchimp / Beehiiv: every one of them gives you an
-           HTML form embed. You can paste their whole form here instead and
-           just add class="email-form" / class="btn btn-primary" to match
-           the styling.
-
-    <form class="email-form" method="POST" action="TODO-PASTE-YOUR-ENDPOINT-HERE">
-      <input class="email-input" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
-      <button class="btn btn-primary" type="submit">Email me the written guide</button>
-    </form>
-    -->
-    <a class="btn btn-primary" href="#guide">Get the written guide</a>
-    <!-- ▲▲▲ END EMAIL CAPTURE ▲▲▲ -->
-
-    <p class="cta-note">The whole thing is three commands &mdash; one installs it, one opens it, one asks. If you can copy and paste, you&rsquo;re qualified.</p>
+    <div class="step-block">
+      <span class="step-label">Step 2 &mdash; Let Claude set you up</span>
+      <p class="step-desc">Once you&rsquo;re in, paste this one line:</p>
+      <div class="copybox">
+        <code data-copy="Read https://snowcam000.github.io/claude-code-guide/start.md and do what it says">Read https://snowcam000.github.io/claude-code-guide/start.md and do what it says</code>
+        <button class="copy-btn" type="button">Copy</button>
+      </div>
+      <p class="step-desc small">Claude reads the setup playbook and walks you through making it yours &mdash; about ten minutes, and it always asks before it touches anything.</p>
+    </div>
   </section>
 
   <div class="wrap"><div class="divider"></div></div>
 
-  <!-- ============ 4. PDF ============ -->
+  <!-- ============ 4. PDF (the full written guide) ============ -->
   <section class="guide wrap" id="guide">
-    <h2>Or grab it right now</h2>
-    <p>The full written guide as a PDF. Every step, including the boring ones. No email needed.</p>
+    <h2>Want every step written out?</h2>
+    <p>The full guide as a PDF &mdash; screenshots of what each step should look like, and the fix for anything that goes sideways. No email needed.</p>
     <a class="btn btn-secondary" href="./claude-code-guide.pdf" download>Download the written guide</a>
   </section>
 
   <!-- ============ 5. FOOTER ============ -->
   <footer>
     <div class="wrap">
-      <p>If anything looks weird, screenshot the error and paste it to Claude &mdash; no extra words. That&rsquo;s what technical people actually do.</p>
+      <p>If anything looks weird, screenshot it and paste it to Claude &mdash; no extra words. That&rsquo;s what technical people actually do.</p>
       <p class="promise">You really can&rsquo;t get permanently stuck.</p>
     </div>
   </footer>
+
+<script>
+  (function () {
+    // 1. Detect OS and set the matching command (toggle lets them override)
+    var body = document.body;
+    var ua = (navigator.userAgent || "") + " " + (navigator.platform || "");
+    var isWin = /Win/i.test(ua);
+    setOS(isWin ? "win" : "mac");
+
+    function setOS(os) {
+      body.classList.remove("os-mac", "os-win");
+      body.classList.add(os === "win" ? "os-win" : "os-mac");
+      var btns = document.querySelectorAll(".os-toggle button");
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.toggle("active", btns[i].getAttribute("data-os") === os);
+      }
+    }
+
+    var toggle = document.querySelectorAll(".os-toggle button");
+    for (var i = 0; i < toggle.length; i++) {
+      toggle[i].addEventListener("click", function () {
+        setOS(this.getAttribute("data-os"));
+      });
+    }
+
+    // 2. Copy buttons — copy the visible command in their box
+    var copyBtns = document.querySelectorAll(".copy-btn");
+    for (var j = 0; j < copyBtns.length; j++) {
+      copyBtns[j].addEventListener("click", function () {
+        var btn = this;
+        var box = btn.parentNode;
+        // the visible <code> (the other is display:none for this OS)
+        var codes = box.querySelectorAll("code");
+        var text = "";
+        for (var k = 0; k < codes.length; k++) {
+          if (codes[k].offsetParent !== null) { text = codes[k].getAttribute("data-copy"); break; }
+        }
+        if (!text && codes.length) { text = codes[0].getAttribute("data-copy"); }
+
+        function flash() {
+          var orig = btn.textContent;
+          btn.textContent = "Copied ✓";
+          btn.classList.add("copied");
+          setTimeout(function () { btn.textContent = orig; btn.classList.remove("copied"); }, 1800);
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(flash, function () { legacyCopy(text, flash); });
+        } else {
+          legacyCopy(text, flash);
+        }
+      });
+    }
+
+    function legacyCopy(text, done) {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      try { document.execCommand("copy"); done(); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+  })();
+</script>
 
 </body>
 </html>
