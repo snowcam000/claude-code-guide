@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#F7F3EC">
 <title>Ten minutes to your own assistant</title>
-<meta name="description" content="Claude Code for creators, not coders. Watch the install, then copy two lines and let Claude set you up.">
+<meta name="description" content="Claude Code for creators, not coders. Copy two lines and let Claude set you up.">
 
 <!-- Fonts: DM Serif Display (headlines) + Lato (body), with system fallbacks declared in CSS -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,78 +78,8 @@
     margin: 0 auto;
   }
 
-  /* ============ Video ============ */
-  .video-section { padding: 44px 0 8px; }
-
-  .video-wrap {
-    max-width: 330px;
-    margin: 0 auto;
-    aspect-ratio: 9 / 16;
-    border-radius: 20px;
-    overflow: hidden;
-    background: var(--cream-deep);
-    box-shadow: 0 18px 45px -18px rgba(43, 43, 40, 0.28);
-  }
-
-  .video-wrap iframe {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border: 0;
-  }
-
-  /* If the final cut is horizontal (16:9 screen recording), add class="landscape"
-     to the .video-wrap div — the slot flips to a wide frame on every screen size. */
-  .video-wrap.landscape {
-    max-width: 100%;
-    aspect-ratio: 16 / 9;
-  }
-
-  /* Placeholder card — delete once the real embed is in */
-  .video-placeholder {
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    border: 2px dashed var(--terracotta);
-    border-radius: 20px;
-    padding: 28px;
-    text-align: center;
-  }
-
-  .video-placeholder .play {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: var(--terracotta);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .video-placeholder .play::after {
-    content: "";
-    display: block;
-    margin-left: 5px;
-    border-style: solid;
-    border-width: 12px 0 12px 20px;
-    border-color: transparent transparent transparent var(--cream);
-  }
-
-  .video-placeholder p {
-    font-weight: 700;
-    font-size: 0.95rem;
-    letter-spacing: 0.04em;
-    color: var(--terracotta);
-    text-transform: uppercase;
-  }
-
   /* ============ Setup (the doing) ============ */
-  .setup { padding: 52px 0 0; }
+  .setup { padding: 8px 0 0; }
 
   .setup h2 {
     font-family: var(--serif);
@@ -302,6 +232,7 @@
     margin: 50px 0;
   }
 
+  .guide { padding-top: 24px; }
   .guide h2 {
     font-family: var(--serif);
     font-weight: 400;
@@ -340,8 +271,6 @@
   /* ============ Wider screens: keep it calm and centered ============ */
   @media (min-width: 700px) {
     .hero { padding-top: 96px; }
-    .video-wrap { max-width: 360px; }
-    .video-wrap.landscape { max-width: 560px; }
     .btn { max-width: 420px; margin-left: auto; margin-right: auto; }
   }
 </style>
@@ -352,37 +281,17 @@
   <header class="hero wrap">
     <p class="kicker">Claude Code for creators &mdash; not coders</p>
     <h1>Ten minutes to your own assistant.</h1>
-    <p class="sub">Watch me install it on your phone, then copy two lines on your computer. Claude does the rest.</p>
+    <p class="sub">Copy two lines on your computer, and Claude does the rest.</p>
   </header>
 
-  <!-- ============ 2. VIDEO ============ -->
-  <section class="video-section wrap">
-    <div class="video-wrap">
-
-      <!-- ▼▼▼ VIDEO EMBED — ONE-LINE SWAP ▼▼▼
-
-           ███ LAUNCH BLOCKER ███
-           The headline promise is "Watch me install it." Do NOT send the
-           DM link until the real embed is in this slot.
-
-           When the video is up on YouTube:
-           1. Delete the whole <a class="video-placeholder"> block below.
-           2. Paste this single line in its place (swap in your real video ID):
-
-           <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" title="Install walkthrough" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-
-           The container is sized 9:16 for the vertical cut (Script A is vertical).
-           If you end up posting a horizontal cut instead, also add the class
-           "landscape" to the <div class="video-wrap"> above and the slot goes 16:9.
-      -->
-      <a class="video-placeholder" href="#setup">
-        <div class="play"></div>
-        <p>Install video coming today &mdash;<br>the two lines you need are right below</p>
-      </a>
-      <!-- ▲▲▲ END VIDEO EMBED ▲▲▲ -->
-
-    </div>
+  <!-- ============ 2. PDF (the full written guide) ============ -->
+  <section class="guide wrap" id="guide">
+    <h2>Want every step written out?</h2>
+    <p>The full guide as a PDF &mdash; screenshots of what each step should look like, and the fix for anything that goes sideways. No email needed.</p>
+    <a class="btn btn-secondary" href="./claude-code-guide.pdf" download>Download the written guide</a>
   </section>
+
+  <div class="wrap"><div class="divider"></div></div>
 
   <!-- ============ 3. SETUP — THE DOING (open this on your computer) ============ -->
   <section class="setup wrap" id="setup">
@@ -419,16 +328,7 @@
     </div>
   </section>
 
-  <div class="wrap"><div class="divider"></div></div>
-
-  <!-- ============ 4. PDF (the full written guide) ============ -->
-  <section class="guide wrap" id="guide">
-    <h2>Want every step written out?</h2>
-    <p>The full guide as a PDF &mdash; screenshots of what each step should look like, and the fix for anything that goes sideways. No email needed.</p>
-    <a class="btn btn-secondary" href="./claude-code-guide.pdf" download>Download the written guide</a>
-  </section>
-
-  <!-- ============ 5. FOOTER ============ -->
+  <!-- ============ 4. FOOTER ============ -->
   <footer>
     <div class="wrap">
       <p>If anything looks weird, screenshot it and paste it to Claude &mdash; no extra words. That&rsquo;s what technical people actually do.</p>
